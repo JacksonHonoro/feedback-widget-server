@@ -1,24 +1,12 @@
-import { prisma } from './prisma';
 import express from 'express';
+
+import { routes } from './routes';
 
 const app = express();
 
 app.use(express.json());
+app.use(routes);
 
-app.post('/feedbacks', async (req, res) => {
-  const { type, comment, screenshot, createdAt } = req.body;
-
-  const feedback = await prisma.feedback.create({
-    data: {
-      type,
-      comment,
-      screenshot,
-      createdAt
-    }
-  })
-
-  return res.status(201).json({ data: feedback });
-})
 
 app.listen(3333, () => {
   console.log('Server started on port 3333');
